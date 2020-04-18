@@ -1,13 +1,17 @@
 package com.jpa_and_hibernate.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,6 +41,12 @@ public class Course {
 	// There are many more attributes like nullable, insertable, updatable, length, unique etc.
 	// Do ctrl + click on @Column to see in detail.
 	
+	@OneToMany(mappedBy="course")
+	// In @OneToMany, fetchType is LAZY by default.
+	// Anything to Many (@OneToMany, @ManyToMany) - fetchType is LAZY by default.
+	private List<Review> reviews  = new ArrayList<>();
+	// private List<Review> reviews; - Should also work.
+	
 	@UpdateTimestamp		// It is a Hibernate Annotation. Used to store the last updated timestamp of the row.
 	private LocalDateTime lastUpdatedDate;
 	@CreationTimestamp	// It is a Hibernate Annotation. Used to store the timestamp of the row when it is created for the 1st time.
@@ -64,6 +74,22 @@ public class Course {
 		return id;
 	}
 	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+	
+	public void addReview(Review review)
+	// We don't want others to set reviews.
+	// That's why writing addReview() & removeReview().
+	{
+		this.reviews.add(review);
+	}
+	
+	public void removeReview(Review review)
+	{
+		this.reviews.remove(review);
+	}
+
 	@Override
 	public String toString() {
 		return "Course [Name=" + name + "]";

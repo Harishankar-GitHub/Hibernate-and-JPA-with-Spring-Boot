@@ -3,6 +3,7 @@ package com.jpa_and_hibernate.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Review {	
@@ -11,7 +12,12 @@ public class Review {
 	@GeneratedValue
 	private Long id;
 	private String rating;
-	private String description;	
+	private String description;
+	
+	@ManyToOne
+	// In @ManyToOne, fetchType is EAGER by default.
+	// Anything to One (@OneToOne, @ManyToOne) - fetchType is EAGER by default.
+	private Course course;
 	
 	protected Review()
 	{
@@ -44,6 +50,14 @@ public class Review {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 	@Override
