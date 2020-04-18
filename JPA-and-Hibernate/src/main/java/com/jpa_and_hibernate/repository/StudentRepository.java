@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Passport;
 import com.jpa_and_hibernate.entity.Student;
 
@@ -78,6 +79,29 @@ public class StudentRepository {
 		// If these operations are executed from a method in StudentRepositoryTest.java, it will throw exception because,
 		// there's no transaction for that method or for StudentRepositoryTest.java.
 		// So, we have written these operations inside this method as this class has @Transactional.
+	}
+	
+	public void insertHardcodedStudentAndCourse()
+	{
+		Student s = new Student("Jackkk");
+		Course c = new Course("Microservices in 100 Steps");
+		
+		entityManager.persist(s);
+		entityManager.persist(c);
+		
+		s.addCourse(c);
+		c.addStudents(s);
+		
+		entityManager.persist(s);
+	}
+	
+	public void insertStudentAndCourse(Student s, Course c)
+	{
+		s.addCourse(c);
+		c.addStudents(s);
+		
+		entityManager.persist(s);
+		entityManager.persist(c);
 	}
 		
 																											

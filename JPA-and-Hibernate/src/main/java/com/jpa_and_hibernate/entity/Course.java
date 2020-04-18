@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,6 +34,7 @@ public class Course {
 	@GeneratedValue			// Used to Auto Generate values of this variable
 	private Long id;
 	
+	
 	@Column(name="name", nullable = false)			
 	private String name;											
 	// @Column is used if the column in table and the corresponding field or variable in this entity class are different.
@@ -41,16 +42,26 @@ public class Course {
 	// There are many more attributes like nullable, insertable, updatable, length, unique etc.
 	// Do ctrl + click on @Column to see in detail.
 	
+	
 	@OneToMany(mappedBy="course")
 	// In @OneToMany, fetchType is LAZY by default.
 	// Anything to Many (@OneToMany, @ManyToMany) - fetchType is LAZY by default.
 	private List<Review> reviews  = new ArrayList<>();
 	// private List<Review> reviews; - Should also work.
 	
+	
+	@ManyToMany(mappedBy="courses")
+	// Each Course can have many Students enrolled.
+	// In @ManyToMany, Any side can be the owning side. In this case, we have considered Student as owning side.
+	// So, mappedBy is put in Course.
+	private List<Student> students = new ArrayList<>();
+	
+	
 	@UpdateTimestamp		// It is a Hibernate Annotation. Used to store the last updated timestamp of the row.
 	private LocalDateTime lastUpdatedDate;
 	@CreationTimestamp	// It is a Hibernate Annotation. Used to store the timestamp of the row when it is created for the 1st time.
 	private LocalDateTime createdDate;
+	
 	
 	protected Course()
 	{
@@ -81,6 +92,7 @@ public class Course {
 	public void addReview(Review review)
 	// We don't want others to set reviews.
 	// That's why writing addReview() & removeReview().
+	// Actually this method is not needed. Setting Course to review is enough. Even if addReview is used, doesn't matter.
 	{
 		this.reviews.add(review);
 	}
@@ -88,6 +100,15 @@ public class Course {
 	public void removeReview(Review review)
 	{
 		this.reviews.remove(review);
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void addStudents(Student student) {
+	// Actually this method is not needed. Even if addStudents is used, doesn't matter.
+		this.students.add(student);
 	}
 
 	@Override

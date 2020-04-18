@@ -1,10 +1,16 @@
 package com.jpa_and_hibernate.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -24,6 +30,17 @@ public class Student {
 	// student details will be fetched and corresponding passport details will also be fetched.
 	// If this attribute is used, only student details will be fetched.
 	private Passport passport;
+	
+	@ManyToMany	// Each Student can enroll many Courses.
+	@JoinTable(
+							name="STUDENT_COURSE",
+							joinColumns=@JoinColumn(name="STUDENT_ID"),
+							inverseJoinColumns=@JoinColumn(name="COURSE_ID")
+					)
+	// @JoinTable is used to create a Join Table.
+	// name attribute is used to define Join Table Name.
+	// joinColumn & inverseJoinColumn attributes are used to define the column name in the Join Table.
+	private List<Course> courses = new ArrayList<>();
 	
 	
 	protected Student()
@@ -56,6 +73,16 @@ public class Student {
 		this.passport = passport;
 	}
 
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void addCourse(Course course)
+	// Actually this method is not needed.
+	{
+		this.courses.add(course);
+	}
+	
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + "]";
