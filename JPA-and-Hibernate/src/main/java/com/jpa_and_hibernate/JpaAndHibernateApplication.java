@@ -59,13 +59,13 @@ public class JpaAndHibernateApplication implements CommandLineRunner {
 		
 //		studentRepository.insertStudentAndCourse(new Student("Jackkk"), new Course("Microservices in 100 steps"));
 		
-		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal("50")));
-		employeeRepository.insert(new FullTimeEmployee("Jackkk", new BigDecimal("10000")));
-		logger.info("All Employees -> {}", employeeRepository.retrieveAllEmployees());
-		
-		
-		logger.info("\n retrieveAllPartTimeEmployees -> {}", employeeRepository.retrieveAllPartTimeEmployees());
-		logger.info("\n retrieveAllFullTimeEmployees -> {}", employeeRepository.retrieveAllFullTimeEmployees());
+//		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal("50")));
+//		employeeRepository.insert(new FullTimeEmployee("Jackkk", new BigDecimal("10000")));
+//		logger.info("All Employees -> {}", employeeRepository.retrieveAllEmployees());
+//		
+//		
+//		logger.info("\n retrieveAllPartTimeEmployees -> {}", employeeRepository.retrieveAllPartTimeEmployees());
+//		logger.info("\n retrieveAllFullTimeEmployees -> {}", employeeRepository.retrieveAllFullTimeEmployees());
 		
 		}
 		
