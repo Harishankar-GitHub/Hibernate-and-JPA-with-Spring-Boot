@@ -102,6 +102,8 @@ public class StudentRepository {
 		
 		entityManager.persist(s);
 		entityManager.persist(c);
+		
+		// We need to persist both the objects here because Student and Course are in @ManyToMany relationship.
 	}
 		
 																											

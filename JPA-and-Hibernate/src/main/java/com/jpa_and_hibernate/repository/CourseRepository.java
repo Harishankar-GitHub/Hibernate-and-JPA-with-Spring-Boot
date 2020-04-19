@@ -139,10 +139,12 @@ public class CourseRepository {
 		for (Review r : reviews)
 		{
 			c.addReview(r);
-			r.setCourse(c);		// Setting a course is enough. c.addReview() not required. Even if it is used, doesn't matter.
+			r.setCourse(c);
 			entityManager.persist(r);
 		}
-
+		
+		// Persisting 1 object is enough in One to One, One to Many, Many to One.
+		// Mostly it will work. But persisting both the objects is better. Nothing wrong in persisting both.
 	}
 																																																					
 }
