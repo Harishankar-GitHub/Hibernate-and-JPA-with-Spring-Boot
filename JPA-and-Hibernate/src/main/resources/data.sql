@@ -1,5 +1,5 @@
 insert into course (id, name, last_updated_date, created_date) values (10001, 'JPA in 50 Steps', sysdate(), sysdate());
-insert into course (id, name, last_updated_date, created_date) values (10002, 'Java in 50 Steps', sysdate(), sysdate());
+insert into course (id, name, last_updated_date, created_date) values (10002, 'Java in 100 Steps', sysdate(), sysdate());
 insert into course (id, name, last_updated_date, created_date) values (10003, 'Angular in 50 Steps', sysdate(), sysdate());
 
 insert into passport (id, number) values (40001, 'A12345');
