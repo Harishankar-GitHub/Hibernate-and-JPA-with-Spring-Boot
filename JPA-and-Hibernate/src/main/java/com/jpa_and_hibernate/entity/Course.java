@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Course")			
 //The table in database is actually created from this Entity Class.
@@ -54,6 +56,7 @@ public class Course {
 	// Each Course can have many Students enrolled.
 	// In @ManyToMany, Any side can be the owning side. In this case, we have considered Student as owning side.
 	// So, mappedBy is put in Course.
+	@JsonIgnore // Usage - we can ignore a specific field from being returned back in the Json Response. 
 	private List<Student> students = new ArrayList<>();
 	
 	
@@ -113,7 +116,14 @@ public class Course {
 
 	@Override
 	public String toString() {
-		return "Course [Name=" + name + "]";
+		return "Course [id=" + id + ", name=" + name + "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return "Course [Name=" + name + "]";
+//	}
+	
+	
 	
 }

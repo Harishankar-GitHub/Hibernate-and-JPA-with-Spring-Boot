@@ -1,6 +1,12 @@
 insert into course (id, name, last_updated_date, created_date) values (10001, 'JPA in 50 Steps', sysdate(), sysdate());
 insert into course (id, name, last_updated_date, created_date) values (10002, 'Java in 100 Steps', sysdate(), sysdate());
 insert into course (id, name, last_updated_date, created_date) values (10003, 'Angular in 50 Steps', sysdate(), sysdate());
+--insert into course (id, name, last_updated_date, created_date) values (10004, 'Dummy1', sysdate(), sysdate());
+--insert into course (id, name, last_updated_date, created_date) values (10005, 'Dummy2', sysdate(), sysdate());
+--insert into course (id, name, last_updated_date, created_date) values (10006, 'Dummy3', sysdate(), sysdate());
+--insert into course (id, name, last_updated_date, created_date) values (10007, 'Dummy4', sysdate(), sysdate());
+--insert into course (id, name, last_updated_date, created_date) values (10008, 'Dummy5', sysdate(), sysdate());
+-- Inserted Dummy data for the sake of pagination.
 
 insert into passport (id, number) values (40001, 'A12345');
 insert into passport (id, number) values (40002, 'B12345');

@@ -6,7 +6,6 @@ package com.jpa_and_hibernate.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -22,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.jpa_and_hibernate.entity.Course;
-import com.jpa_and_hibernate.entity.Passport;
-import com.jpa_and_hibernate.entity.Student;
 
 @SpringBootTest
 class CriteriaQueryTest {
@@ -115,7 +112,7 @@ class CriteriaQueryTest {
 		
 		List<Course> resultList = query.getResultList();
 		
-		logger.info("\n Courses like '%100 Steps' -> {}\n", resultList);
+		logger.info("\n Course without students -> {}\n", resultList);
 		
 	}
 	
