@@ -39,6 +39,28 @@ class CourseRepositoryTest {
 		assertEquals("JPA in 50 Steps", course.getName());
 	}
 	
+	@Test
+	@Transactional
+	public void findById_firstLevelCacheDemo()
+	{
+		Course course = courseRepository.findById(10001L);
+		logger.info("\n\n First Course Retrieved -> {} \n", course);
+		Course course1 = courseRepository.findById(10001L);
+		logger.info("\n\n First Course Retrieved Again -> {} \n", course);
+		assertEquals("JPA in 50 Steps", course.getName());
+		assertEquals("JPA in 50 Steps", course1.getName());
+		
+		// Initially a select query is fired.
+		// And then "First Course Retrieved" is printed.
+		// After this, without firing another select query, "First Course Retrieved Again" is printed.
+		// This is because, the value is stored in cache. This is called First Level Cache.
+		// NOTE : First Level Cache comes within the boundary of a transaction.
+		// These works fine because @Transactional is present here.
+		// If @Transactional is not present, then 2 times select query will be fired.
+		// Why 2 times ? Because, if @Transactional is not present, courseRepository.findById(10001L) will execute in a transaction
+		// and another courseRepository.findById(10001L) will execute in another transaction.
+	}
+	
 	
 	@Test
 	@DirtiesContext																// The deleteById_Basic() modifies (Inserts or Updates or Deletes) the table state.

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 						@NamedQuery(name = "query_get_100_Step_courses", query = "select c from Course c where name like '%100 Steps'")
 					}
 )
+@Cacheable
+// @Cacheable is used to store the data in Second Level Cache.
+// Where can we put @Cacheable ? If a particular data is accessed frequently. And if that data doesn't change frequently.
+// We are putting @Cacheable annotation here because, we are considering the Course details doesn't change frequently.
 public class Course {	
 	
 	@Id								// Used to define this variable as the primary key of the table
