@@ -3,20 +3,16 @@
 // Which ever class we are testing, that package name should be replaced here.
 package com.jpa_and_hibernate.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import javax.persistence.EntityManager;
-import javax.persistence.FetchType;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jpa_and_hibernate.entity.Address;
 import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Passport;
 import com.jpa_and_hibernate.entity.Student;
@@ -48,7 +44,16 @@ class StudentRepositoryTest {
 		Student student = entityManager.find(Student.class, 20001L);
 		logger.info("Student details -> {}", student);
 		logger.info("Passport details -> {}", student.getPassport());
-		
+	}
+	
+	@Test
+	@Transactional
+	public void setAddress() {
+		Student student = entityManager.find(Student.class, 20001L);
+		student.setAddress(new Address("No 101", "Some Street", "Bangalore"));
+		entityManager.flush();
+		logger.info("Student details -> {}", student);
+		logger.info("Passport details -> {}", student.getPassport());
 	}
 	
 	@Test

@@ -114,5 +114,16 @@ class CourseRepositoryTest {
 		logger.info("\n Testing retrieveCourseForReview() -> {}", review1.getCourse());
 		
 	}
+	
+	@Test
+	@Transactional
+	public void preRemove()
+	{
+		Course course1 = courseRepository.findById(10001L);
+		logger.info("\n\n Before Delete -> {}", course1);
+		courseRepository.deleteById(10001L);
+		Course course2 = courseRepository.findById(10001L);
+		logger.info("\n\n After Delete -> {}", course2);
+	}
 
 }

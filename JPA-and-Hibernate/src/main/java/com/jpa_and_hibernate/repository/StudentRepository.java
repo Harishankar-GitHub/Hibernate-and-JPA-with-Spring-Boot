@@ -105,6 +105,5 @@ public class StudentRepository {
 		
 		// We need to persist both the objects here because Student and Course are in @ManyToMany relationship.
 	}
-		
-																											
+	
 }

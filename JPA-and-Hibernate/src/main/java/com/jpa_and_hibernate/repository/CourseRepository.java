@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Review;
+import com.jpa_and_hibernate.entity.ReviewRating;
 
 @Repository
 @Transactional
@@ -116,8 +117,8 @@ public class CourseRepository {
 		Course c = findById(10003L);
 		logger.info("Reviews for 10003 -> {}", c.getReviews());
 		
-		Review review1 = new Review("5", "Great Hands-on Stuff");
-		Review review2 = new Review("5", "Hatsoff");
+		Review review1 = new Review(ReviewRating.FIVE, "Great Hands-on Stuff");
+		Review review2 = new Review(ReviewRating.FIVE, "Hatsoff");
 		
 		c.addReview(review1);		// Actually creating a new review and setting is enough. c.addReview() is not required. Even if it is used, doesn't matter. 
 		c.addReview(review2);

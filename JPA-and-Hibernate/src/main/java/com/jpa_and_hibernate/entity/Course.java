@@ -13,10 +13,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,7 +40,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 // @Cacheable is used to store the data in Second Level Cache.
 // Where can we put @Cacheable ? If a particular data is accessed frequently. And if that data doesn't change frequently.
 // We are putting @Cacheable annotation here because, we are considering the Course details doesn't change frequently.
-public class Course {	
+// @Cacheable END
+
+@SQLDelete(sql="update Course set is_deleted = true where id = ?")
+// @SQLDelete usage -> While deleting a record, instead of deleting the record permanently,
+// the isDeleted column in that record in table is updated with true.
+// So while selecting, the deleted records (which is still present in table) should not be retrieved.
+// That's why @Where Annotation is used.
+// So the select query that is fired will be like -> select * from table where is_deleted = 0; (0 represents false in query)
+// NOTE : This @Where Annotation won't be applicable on Native Queries.
+// So in Native Queries, we have to manually add the condition like -> select * from table where is_deleted = 0; (0 represents false in query)
+@Where(clause="is_deleted = false")
+// The above concept (@SQLDelete Annotation & @Where Annotation) is known as Hibernate Soft Deletes.
+// What is Hard Delete ? -> If a record is deleted permanently from table -> Normal Delete query.
+public class Course {
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(Course.class);
+	// Logger is made here Static because in Entity class, all the fields will be mapped to tables in database.
+	// That's why instead of private Logger logger -> private static Logger logger is used.
 	
 	@Id								// Used to define this variable as the primary key of the table
 	@GeneratedValue			// Used to Auto Generate values of this variable
@@ -69,6 +91,21 @@ public class Course {
 	private LocalDateTime lastUpdatedDate;
 	@CreationTimestamp	// It is a Hibernate Annotation. Used to store the timestamp of the row when it is created for the 1st time.
 	private LocalDateTime createdDate;
+	
+	private boolean isDeleted;
+	
+	@PreRemove	
+	// Once record is deleted, an update query is fired to database to set isDeleted = true.
+	// But Entity doesn't know about it.
+	// @PreRemove Annotation is used to do any operation before an entity is deleted.
+	// So, once a record is deleted, we are setting isDeleted = true in the below method.
+	// Without setting the value to the entity also it will work.
+	// But @PreRemove is a best practice to ensure that the entity matches the state in the database.
+	private void preRemove()
+	{
+		LOGGER.info("Setting isDeleted to True");
+		this.isDeleted = true;
+	}
 	
 	
 	protected Course()

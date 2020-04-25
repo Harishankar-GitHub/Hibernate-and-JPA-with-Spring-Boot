@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,13 @@ public class Student {
 	private Long id;
 	
 	@Column(nullable = false)
-	private String name;	
+	private String name;
+	
+	@Embedded
+	// If I want the Address Fields to be directly present in Student table instead of Address as a separate Entity,
+	// I can use @@Embedded Annotation here
+	// and @Embedded Annotation in Address Entity.
+	private Address address;
 	
 	@OneToOne(fetch=FetchType.LAZY)
 	// fetch=FetchType.LAZY usage - Only when any of the passport columns or passport details are 
@@ -58,9 +65,19 @@ public class Student {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 	public Long getId() {
 		return id;
 	}
