@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.jpa_and_hibernate.entity.Course;
-import com.jpa_and_hibernate.entity.Passport;
 import com.jpa_and_hibernate.entity.Student;
 
 @SpringBootTest
