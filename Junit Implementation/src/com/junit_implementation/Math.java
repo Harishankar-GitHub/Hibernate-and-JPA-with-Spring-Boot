@@ -1,7 +1,7 @@
 package com.junit_implementation;
 
-public class Math {
-	
+public class Math
+{
 	int sum(int[] numbers)
 	{
 		int sum = 0;
@@ -11,5 +11,4 @@ public class Math {
 		}
 		return sum;
 	}
-
 }
