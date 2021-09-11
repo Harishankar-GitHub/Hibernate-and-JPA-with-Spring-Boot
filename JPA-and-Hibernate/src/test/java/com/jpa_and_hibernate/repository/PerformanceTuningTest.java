@@ -19,9 +19,6 @@ import java.util.List;
 class PerformanceTuningTest {
 	
 	@Autowired
-	CourseRepository courseRepository;
-	
-	@Autowired
 	EntityManager em;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PerformanceTuningTest.class);

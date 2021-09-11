@@ -75,7 +75,7 @@ public class Course {
 	@OneToMany(mappedBy="course")
 	// In @OneToMany, fetchType is LAZY by default.
 	// Anything to Many (@OneToMany, @ManyToMany) - fetchType is LAZY by default.
-	private List<Review> reviews  = new ArrayList<>();
+	private final List<Review> reviews  = new ArrayList<>();
 	// private List<Review> reviews; - Should also work.
 	
 	
@@ -84,7 +84,7 @@ public class Course {
 	// In @ManyToMany, Any side can be the owning side. In this case, we have considered Student as owning side.
 	// So, mappedBy is put in Course.
 	@JsonIgnore // Usage - we can ignore a specific field from being returned to the Json Response.
-	private List<Student> students = new ArrayList<>();
+	private final List<Student> students = new ArrayList<>();
 	
 	
 	@UpdateTimestamp	// It is a Hibernate Annotation. Used to store the last updated timestamp of the row.

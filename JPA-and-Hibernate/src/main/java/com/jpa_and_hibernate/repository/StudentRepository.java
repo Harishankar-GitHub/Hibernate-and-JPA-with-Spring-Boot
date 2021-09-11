@@ -3,8 +3,6 @@ package com.jpa_and_hibernate.repository;
 import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Passport;
 import com.jpa_and_hibernate.entity.Student;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +12,6 @@ import javax.persistence.EntityManager;
 @Repository
 @Transactional
 public class StudentRepository {
-	
-	private static final Logger logger = LoggerFactory.getLogger(StudentRepository.class);
 	
 	@Autowired
 	EntityManager entityManager;									// Repository should be able to interact with Database.

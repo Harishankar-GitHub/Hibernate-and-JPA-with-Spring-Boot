@@ -46,7 +46,7 @@ public class Student {
 	// @JoinTable is used to create a Join Table.
 	// name attribute is used to define Join Table Name.
 	// joinColumn & inverseJoinColumn attributes are used to define the column name in the Join Table.
-	private List<Course> courses = new ArrayList<>();
+	private final List<Course> courses = new ArrayList<>();
 	
 	
 	protected Student()

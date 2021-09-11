@@ -103,16 +103,16 @@ class JPQL_Test {
 	public void join()
 	{
 		Query q = entityManager.createQuery("select c, s from Course c JOIN c.students s");
-		List<Object[]> resultList = q.getResultList();
+		List resultList = q.getResultList();
 		// The list has list of array of objects.
 		// In 1 array, Course Object and Student Object will be present.
 		// Therefore, the list will have list of array of objects.
 		logger.info("JOIN -> {}", resultList.size());
 		
-		for (Object[] o : resultList)
+		for (Object o : resultList)
 		{
 			// In 1 iteration, o will have 1 array which will have 1 Course Object & 1 corresponding Student Object.
-			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", o[0], o[1]);
+			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
 		}
 	}
 	
@@ -120,16 +120,16 @@ class JPQL_Test {
 	public void left_join()
 	{
 		Query q = entityManager.createQuery("select c, s from Course c LEFT JOIN c.students s");
-		List<Object[]> resultList = q.getResultList();
+		List resultList = q.getResultList();
 		// The list has list of array of objects.
 		// In 1 array, Course Object and Student Object will be present.
 		// Therefore, the list will have list of array of objects.
 		logger.info("LEFT JOIN -> {}", resultList.size());
 		
-		for (Object[] o : resultList)
+		for (Object o : resultList)
 		{
 			// In 1 iteration, o will have 1 array which will have 1 Course Object & 1 corresponding Student Object.
-			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", o[0], o[1]);
+			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
 		}
 	}
 	
@@ -137,16 +137,16 @@ class JPQL_Test {
 	public void cross_join()
 	{
 		Query q = entityManager.createQuery("select c, s from Course c, Student  s"); // This is the CROSS JOIN Syntax.
-		List<Object[]> resultList = q.getResultList();
+		List resultList = q.getResultList();
 		// The list has list of array of objects.
 		// In 1 array, Course Object and Student Object will be present.
 		// Therefore, the list will have list of array of objects.
 		logger.info("CROSS JOIN -> {}", resultList.size());
 		
-		for (Object[] o : resultList)
+		for (Object o : resultList)
 		{
 			// In 1 iteration, o will have 1 array which will have 1 Course Object & 1 corresponding Student Object.
-			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", o[0], o[1]);
+			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
 		}
 	}
 }
