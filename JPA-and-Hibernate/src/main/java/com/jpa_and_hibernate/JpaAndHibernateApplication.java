@@ -1,7 +1,14 @@
 package com.jpa_and_hibernate;
 
-import java.math.BigDecimal;
-
+import com.jpa_and_hibernate.entity.Course;
+import com.jpa_and_hibernate.entity.FullTimeEmployee;
+import com.jpa_and_hibernate.entity.PartTimeEmployee;
+import com.jpa_and_hibernate.entity.Review;
+import com.jpa_and_hibernate.entity.ReviewRating;
+import com.jpa_and_hibernate.entity.Student;
+import com.jpa_and_hibernate.repository.CourseRepository;
+import com.jpa_and_hibernate.repository.EmployeeRepository;
+import com.jpa_and_hibernate.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +16,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.jpa_and_hibernate.entity.FullTimeEmployee;
-import com.jpa_and_hibernate.entity.PartTimeEmployee;
-import com.jpa_and_hibernate.repository.CourseRepository;
-import com.jpa_and_hibernate.repository.EmployeeRepository;
-import com.jpa_and_hibernate.repository.StudentRepository;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class JpaAndHibernateApplication implements CommandLineRunner {
@@ -25,48 +30,45 @@ public class JpaAndHibernateApplication implements CommandLineRunner {
 	@Autowired
 	EmployeeRepository employeeRepository;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(JpaAndHibernateApplication.class);
 	
 	public static void main(String[] args) {
 		SpringApplication.run(JpaAndHibernateApplication.class, args);
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
-//		Course course = courseRepository.findById(10001L);
-//		logger.info("\n Course 10001 -> {}", course);
-//		
-//		courseRepository.deleteById(10002L);			// If this method has to be tested from Junit, this line has to be commented.
-//		
-//		courseRepository.save(new Course("Hibernate"));
+	public void run(String... args) {
 
-//		courseRepository.playWithEntityManager();
+		Course course = courseRepository.findById(10001L);
+		logger.info("\n Course 10001 -> {}", course);
+
+//		courseRepository.deleteById(10002L);			// If this method has to be tested from Junit, this line has to be commented.
+
+		courseRepository.save(new Course("Hibernate"));
+
+		courseRepository.playWithEntityManager();
+
+		studentRepository.saveStudentWithPassport();
 		
-//		studentRepository.saveStudentWithPassport();
+		studentRepository.someOperationToUnderstandPersistenceContext();
 		
-//		studentRepository.someOperationToUnderstandPersistenceContext();
+		courseRepository.addHardcodedReviewsForCourse();
 		
-//		courseRepository.addHardcodedReviewsForCourse();
+		List<Review> reviews = new ArrayList<>();
+		reviews.add(new Review(ReviewRating.FIVE, "Great Hands-on Stuff"));
+		reviews.add(new Review(ReviewRating.FIVE, "Hatsoff"));
+		courseRepository.addReviewsForCourse(10003L, reviews );
 		
-//		List<Review> reviews = new ArrayList<>();
-//		reviews.add(new Review("5", "Great Hands-on Stuff"));
-//		reviews.add(new Review("5", "Hatsoff"));
-//		courseRepository.addReviewsForCourse(10003L, reviews );
+		studentRepository.insertHardcodedStudentAndCourse();
 		
-//		studentRepository.insertHardcodedStudentAndCourse();
+		studentRepository.insertStudentAndCourse(new Student("Jackkk"), new Course("Microservices in 100 steps"));
 		
-//		studentRepository.insertStudentAndCourse(new Student("Jackkk"), new Course("Microservices in 100 steps"));
-		
-//		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal("50")));
-//		employeeRepository.insert(new FullTimeEmployee("Jackkk", new BigDecimal("10000")));
-//		logger.info("All Employees -> {}", employeeRepository.retrieveAllEmployees());
-//		
-//		
-//		logger.info("\n retrieveAllPartTimeEmployees -> {}", employeeRepository.retrieveAllPartTimeEmployees());
-//		logger.info("\n retrieveAllFullTimeEmployees -> {}", employeeRepository.retrieveAllFullTimeEmployees());
-		
-		}
-		
+		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal("50")));
+		employeeRepository.insert(new FullTimeEmployee("Jackkk", new BigDecimal("10000")));
+		logger.info("All Employees -> {}", employeeRepository.retrieveAllEmployees());
+
+
+		logger.info("\n retrieveAllPartTimeEmployees -> {}", employeeRepository.retrieveAllPartTimeEmployees());
+		logger.info("\n retrieveAllFullTimeEmployees -> {}", employeeRepository.retrieveAllFullTimeEmployees());
 	}
+}

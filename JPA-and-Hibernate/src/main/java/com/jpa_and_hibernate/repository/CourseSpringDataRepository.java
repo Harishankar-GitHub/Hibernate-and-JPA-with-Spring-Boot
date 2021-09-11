@@ -1,12 +1,11 @@
 package com.jpa_and_hibernate.repository;
 
-import java.util.List;
-
+import com.jpa_and_hibernate.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.jpa_and_hibernate.entity.Course;
+import java.util.List;
 
 
 @RepositoryRestResource(path="courses")
@@ -38,5 +37,4 @@ public interface CourseSpringDataRepository extends JpaRepository<Course, Long>{
 	@Query(name="query_get_100_Step_courses")
 	List<Course> coursesWith100StepsInNameUsingNamedQuery();
 	// Named Query is used.
-	
 }

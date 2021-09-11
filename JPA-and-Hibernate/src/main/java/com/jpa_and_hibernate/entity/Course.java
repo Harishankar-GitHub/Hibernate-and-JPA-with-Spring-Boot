@@ -1,8 +1,12 @@
 package com.jpa_and_hibernate.entity;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -15,27 +19,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="Course")			
+@Table(name="Course")
 //The table in database is actually created from this Entity Class.
 //@Table is used if database table name and this entity class name are different.
 @NamedQueries
 (
 		value = {
-						@NamedQuery(name = "query_get_all_courses", query = "select c from Course c"),
-						@NamedQuery(name = "query_get_all_courses_join_fetch", query = "select c from Course c JOIN FETCH c.students s"),
-						@NamedQuery(name = "query_get_100_Step_courses", query = "select c from Course c where name like '%100 Steps'")
-					}
+					@NamedQuery(name = "query_get_all_courses", query = "select c from Course c"),
+					@NamedQuery(name = "query_get_all_courses_join_fetch", query = "select c from Course c JOIN FETCH c.students s"),
+					@NamedQuery(name = "query_get_100_Step_courses", query = "select c from Course c where name like '%100 Steps'")
+				}
 )
 
 @Cacheable
@@ -57,16 +55,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 // What is Hard Delete ? -> If a record is deleted permanently from table -> Normal Delete query.
 public class Course {
 	
-	private static Logger LOGGER = LoggerFactory.getLogger(Course.class);
+	private static final Logger logger = LoggerFactory.getLogger(Course.class);
 	// Logger is made here Static because in Entity class, all the fields will be mapped to tables in database.
 	// That's why instead of private Logger logger -> private static Logger logger is used.
 	
-	@Id								// Used to define this variable as the primary key of the table
-	@GeneratedValue			// Used to Auto Generate values of this variable
+	@Id						// Used to define this variable as the primary key of the table.
+	@GeneratedValue			// Used to Auto Generate values of this variable.
 	private Long id;
+
 	
-	
-	@Column(name="name", nullable = false)			
+	@Column(name="name", nullable = false)
 	private String name;											
 	// @Column is used if the column in table and the corresponding field or variable in this entity class are different.
 	// By putting nullable = false, while creating the table, it will create the column as not null.
@@ -85,18 +83,18 @@ public class Course {
 	// Each Course can have many Students enrolled.
 	// In @ManyToMany, Any side can be the owning side. In this case, we have considered Student as owning side.
 	// So, mappedBy is put in Course.
-	@JsonIgnore // Usage - we can ignore a specific field from being returned back in the Json Response. 
+	@JsonIgnore // Usage - we can ignore a specific field from being returned to the Json Response.
 	private List<Student> students = new ArrayList<>();
 	
 	
-	@UpdateTimestamp		// It is a Hibernate Annotation. Used to store the last updated timestamp of the row.
+	@UpdateTimestamp	// It is a Hibernate Annotation. Used to store the last updated timestamp of the row.
 	private LocalDateTime lastUpdatedDate;
 	@CreationTimestamp	// It is a Hibernate Annotation. Used to store the timestamp of the row when it is created for the 1st time.
 	private LocalDateTime createdDate;
 	
 	private boolean isDeleted;
 	
-	@PreRemove	
+	@PreRemove
 	// Once record is deleted, an update query is fired to database to set isDeleted = true.
 	// But Entity doesn't know about it.
 	// @PreRemove Annotation is used to do any operation before an entity is deleted.
@@ -105,14 +103,14 @@ public class Course {
 	// But @PreRemove is a best practice to ensure that the entity matches the state in the database.
 	private void preRemove()
 	{
-		LOGGER.info("Setting isDeleted to True");
+		logger.info("Setting isDeleted to True");
 		this.isDeleted = true;
 	}
 	
 	
 	protected Course()
 	{
-		// In Hibernate, if we use Parameterized Constructor, Java would't provide a No Argument Constructor.
+		// In Hibernate, if we use Parameterized Constructor, Java wouldn't provide a No Argument Constructor.
 		// To overcome that, we are defining a No Argument Constructor.
 		// And in Hibernate, No Argument Constructor is needed.
 	}
@@ -125,9 +123,11 @@ public class Course {
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -162,12 +162,4 @@ public class Course {
 	public String toString() {
 		return "Course [id=" + id + ", name=" + name + "]";
 	}
-
-//	@Override
-//	public String toString() {
-//		return "Course [Name=" + name + "]";
-//	}
-	
-	
-	
 }

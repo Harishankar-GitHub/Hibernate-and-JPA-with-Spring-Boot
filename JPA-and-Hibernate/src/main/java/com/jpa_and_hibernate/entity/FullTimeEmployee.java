@@ -1,11 +1,11 @@
 package com.jpa_and_hibernate.entity;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Entity;
+import java.math.BigDecimal;
 
 @Entity
 public class FullTimeEmployee extends Employee {
+
 	private BigDecimal salary;
 	
 	protected FullTimeEmployee()
@@ -18,5 +18,4 @@ public class FullTimeEmployee extends Employee {
 		super(name);
 		this.salary = salary;
 	}
-
 }

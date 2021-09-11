@@ -1,13 +1,9 @@
-//package com.jpa_and_hibernate;
+// package com.jpa_and_hibernate;
 // The above is the default line which has the package
 // Which ever class we are testing, that package name should be replaced here.
 package com.jpa_and_hibernate.repository;
 
-import java.util.List;
-
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManager;
-
+import com.jpa_and_hibernate.entity.Course;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa_and_hibernate.entity.Course;
+import javax.persistence.EntityGraph;
+import javax.persistence.EntityManager;
+import java.util.List;
 
 @SpringBootTest
 class PerformanceTuningTest {
@@ -26,7 +24,7 @@ class PerformanceTuningTest {
 	@Autowired
 	EntityManager em;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(PerformanceTuningTest.class);
 		
 	@Test
 	@Transactional
@@ -77,7 +75,6 @@ class PerformanceTuningTest {
 		// In other places, if we retrieve course, only course details will be retrieved.
 		// Hence, the N+1 Problem is solved.
 		// If we execute this method, just 1 query is fired.
-		
 	}
 	
 	@Test
@@ -96,7 +93,5 @@ class PerformanceTuningTest {
 		// JOIN does a select * from A table and join both tables. (For example, A JOIN B)
 		// Hence, the N+1 Problem is solved.
 		// If we execute this method, just 1 query is fired.
-		
 	}
-	
 }

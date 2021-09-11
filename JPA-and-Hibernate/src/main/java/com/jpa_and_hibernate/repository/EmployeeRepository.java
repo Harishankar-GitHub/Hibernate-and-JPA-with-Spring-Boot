@@ -1,26 +1,24 @@
 package com.jpa_and_hibernate.repository;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-
+import com.jpa_and_hibernate.entity.Employee;
+import com.jpa_and_hibernate.entity.FullTimeEmployee;
+import com.jpa_and_hibernate.entity.PartTimeEmployee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa_and_hibernate.entity.Employee;
-import com.jpa_and_hibernate.entity.FullTimeEmployee;
-import com.jpa_and_hibernate.entity.PartTimeEmployee;
+import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @Transactional
 public class EmployeeRepository {
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeRepository.class);
 	
-	@Autowired																// Repository should be able to interact with Database.
+	@Autowired														// Repository should be able to interact with Database.
 	EntityManager entityManager;									// That's why auto wiring EntityManager.
 	
 	public void insert(Employee e)
@@ -28,7 +26,7 @@ public class EmployeeRepository {
 		entityManager.persist(e);
 	}
 	
-	public List<Employee> retrieveAllEmployees()			// If @Entity is put on Employee Class, this method will work.
+	public List<Employee> retrieveAllEmployees()					// If @Entity is put on Employee Class, this method will work.
 	{
 		return entityManager.createQuery("select e from Employee e", Employee.class).getResultList();
 	}

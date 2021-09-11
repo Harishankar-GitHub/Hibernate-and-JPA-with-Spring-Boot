@@ -28,7 +28,7 @@ public class Passport {
 	
 	protected Passport()
 	{
-		// In Hibernate, if we use Parameterized Constructor, Java would't provide a No Argument Constructor.
+		// In Hibernate, if we use Parameterized Constructor, Java wouldn't provide a No Argument Constructor.
 		// To overcome that, we are defining a No Argument Constructor.
 		// And in Hibernate, No Argument Constructor is needed.
 	}
@@ -62,5 +62,4 @@ public class Passport {
 	public String toString() {
 		return "Passport [id=" + id + ", number=" + number + "]";
 	}
-	
 }

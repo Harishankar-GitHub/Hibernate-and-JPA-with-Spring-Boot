@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
 
 @Entity
 // SINGLE_TYPE Annotation code & Explanation - START ------------------------------------------------------------------------------------
@@ -23,7 +22,7 @@ import javax.persistence.MappedSuperclass;
 
 //TABLE_PER_CLASS Annotation code & Explanation - START ---------------------------------------------------------------------------------
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-//// Usage of TABLE_PER_CLASS - Each Concrete Class will have it's own table.
+//// Usage of TABLE_PER_CLASS - Each Concrete Class will have its own table.
 //// In this case, PartTimeEmployee will be a table & FullTimeEmployee will be a table.
 //// Employee Class is Abstract. If it is not abstract, then an Employee table will also be created which is of no use.
 //// While retrieving, UNION Query is fired.
@@ -41,13 +40,13 @@ import javax.persistence.MappedSuperclass;
 //@MappedSuperclass Annotation code & Explanation - START -----------------------------------------------------------------------------------
 //@MappedSuperclass
 //// There's no inheritance hierarchy at all.
-//// It is just defining some stuff in this class which is common between the sub classes.
+//// It is just defining some stuff in this class which is common between the sub-classes.
 //// If @MappedSuperclass is used, then @Entity cannot be used. i.e., Employee Class cannot be used as an Entity.
 //@MappedSuperclass Annotation code & Explanation - END -----------------------------------------------------------------------------------
 public abstract class Employee {
 	// We have made Employee Class Abstract because, we don't want anybody to create object for Employee Class.
 	
-	@Id								// Used to define this variable as the primary key of the table
+	@Id						// Used to define this variable as the primary key of the table
 	@GeneratedValue			// Used to Auto Generate values of this variable
 	private Long id;
 
@@ -69,9 +68,11 @@ public abstract class Employee {
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -80,5 +81,4 @@ public abstract class Employee {
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + "]";
 	}
-	
 }

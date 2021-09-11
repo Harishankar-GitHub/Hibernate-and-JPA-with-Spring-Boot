@@ -1,10 +1,12 @@
-//package com.jpa_and_hibernate;
+// package com.jpa_and_hibernate;
 // The above is the default line which has the package
 // Which ever class we are testing, that package name should be replaced here.
 package com.jpa_and_hibernate.repository;
 
-import javax.persistence.EntityManager;
-
+import com.jpa_and_hibernate.entity.Address;
+import com.jpa_and_hibernate.entity.Course;
+import com.jpa_and_hibernate.entity.Passport;
+import com.jpa_and_hibernate.entity.Student;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa_and_hibernate.entity.Address;
-import com.jpa_and_hibernate.entity.Course;
-import com.jpa_and_hibernate.entity.Passport;
-import com.jpa_and_hibernate.entity.Student;
+import javax.persistence.EntityManager;
 
 @SpringBootTest
 class StudentRepositoryTest {
@@ -27,7 +26,7 @@ class StudentRepositoryTest {
 	@Autowired
 	EntityManager entityManager;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(StudentRepositoryTest.class);
 	
 	@Test
 	public void someTest() {
@@ -82,5 +81,4 @@ class StudentRepositoryTest {
 		logger.info("\n Testing retrieveCourseAndStudents() -> Course details -> {}", c);
 		logger.info("\n Testing retrieveCourseAndStudents() -> {}", c.getStudents());
 	}
-	
 }

@@ -1,13 +1,10 @@
-//package com.jpa_and_hibernate;
-// The above is the default line which has the package
-// Which ever class we are testing, that package name should be replaced here.
+// package com.jpa_and_hibernate;
+// The above is the default line which has the package.
+// Which ever class we are testing, that class name should be appended to the package.
 package com.jpa_and_hibernate.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import javax.persistence.EntityManager;
-
+import com.jpa_and_hibernate.entity.Course;
+import com.jpa_and_hibernate.entity.Review;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +13,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa_and_hibernate.entity.Course;
-import com.jpa_and_hibernate.entity.Review;
+import javax.persistence.EntityManager;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 class CourseRepositoryTest {
 	
-	// Junit runs between Context Launch and Context Destroy
+	// Junit runs between Context Launch and Context Destroy.
 	
 	@Autowired
 	CourseRepository courseRepository;
@@ -30,7 +29,7 @@ class CourseRepositoryTest {
 	@Autowired
 	EntityManager em;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(CourseRepositoryTest.class);
 		
 	@Test
 	public void findById_Basic() {
@@ -63,11 +62,12 @@ class CourseRepositoryTest {
 	
 	
 	@Test
-	@DirtiesContext																// The deleteById_Basic() modifies (Inserts or Updates or Deletes) the table state.
-	public void deleteById_Basic()											// By using @DirtiesContext annotation, Spring Boot will reset the data
-	{																						// after executing this method.
+	@DirtiesContext													// The deleteById_Basic() modifies (Inserts or Updates or Deletes) the table state.
+	public void deleteById_Basic()									// By using @DirtiesContext annotation, Spring Boot will reset the data
+	{																// after executing this method.
 		courseRepository.deleteById(10002L);
 		assertNull(courseRepository.findById(10002L));
+		// To test this, comment the deleteById() method call that is in the main class.
 	}
 	
 	@Test
@@ -112,7 +112,6 @@ class CourseRepositoryTest {
 	{
 		Review review1 = em.find(Review.class, 50001L);
 		logger.info("\n Testing retrieveCourseForReview() -> {}", review1.getCourse());
-		
 	}
 	
 	@Test
@@ -125,5 +124,4 @@ class CourseRepositoryTest {
 		Course course2 = courseRepository.findById(10001L);
 		logger.info("\n\n After Delete -> {}", course2);
 	}
-
 }

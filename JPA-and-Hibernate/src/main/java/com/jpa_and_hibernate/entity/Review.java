@@ -72,5 +72,4 @@ public class Review {
 	public String toString() {
 		return "Review [id=" + id + ", rating=" + rating + ", description=" + description + "]";
 	}
-	
 }

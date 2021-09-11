@@ -1,8 +1,5 @@
 package com.jpa_and_hibernate.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -13,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Student {	
@@ -104,5 +103,4 @@ public class Student {
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + "]";
 	}
-
 }

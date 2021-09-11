@@ -1,13 +1,9 @@
-//package com.jpa_and_hibernate;
+// package com.jpa_and_hibernate;
 // The above is the default line which has the package
 // Which ever class we are testing, that package name should be replaced here.
 package com.jpa_and_hibernate.repository;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
+import com.jpa_and_hibernate.entity.Course;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa_and_hibernate.entity.Course;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 @SpringBootTest
 class Native_Queries_Test {
@@ -25,7 +23,7 @@ class Native_Queries_Test {
 	@Autowired
 	EntityManager entityManager;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(Native_Queries_Test.class);
 	
 	// Native Queries
 	//There might be some situation where we might need Native Queries.
@@ -70,5 +68,4 @@ class Native_Queries_Test {
 		int noOfRowsUpdated = query.executeUpdate();		// For updating or inserting or deleting, we use executeUpdate().
 		logger.info("Number of rows updated -> {}", noOfRowsUpdated);
 	}
-
 }

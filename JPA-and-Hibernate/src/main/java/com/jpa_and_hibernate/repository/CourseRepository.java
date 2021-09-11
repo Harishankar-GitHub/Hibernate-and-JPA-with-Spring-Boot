@@ -1,28 +1,26 @@
 package com.jpa_and_hibernate.repository;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-
+import com.jpa_and_hibernate.entity.Course;
+import com.jpa_and_hibernate.entity.Review;
+import com.jpa_and_hibernate.entity.ReviewRating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa_and_hibernate.entity.Course;
-import com.jpa_and_hibernate.entity.Review;
-import com.jpa_and_hibernate.entity.ReviewRating;
+import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @Transactional
 public class CourseRepository {
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(CourseRepository.class);
 	
 	@Autowired
-	EntityManager entityManager;									// Repository should be able to interact with Database.
-																					// That's why auto wiring EntityManager.
+	EntityManager entityManager;								// Repository should be able to interact with Database.
+																// That's why auto wiring EntityManager.
 	
 	public Course findById(Long id)
 	{
@@ -33,11 +31,11 @@ public class CourseRepository {
 	{
 		if (course.getId() == null)
 		{
-			entityManager.persist(course);							// persist() is used to insert. In other words, save.
+			entityManager.persist(course);						// persist() is used to insert. In other words, save.
 		}
 		else
 		{
-			entityManager.merge(course);							// merge() is used to update.
+			entityManager.merge(course);						// merge() is used to update.
 		}
 		return course;
 	}
@@ -112,7 +110,7 @@ public class CourseRepository {
 		// Steps to add reviews
 		//		1. Get a course.
 		//		2. Add 2 reviews to it.
-		// 	3. Save it to database.
+		// 		3. Save it to database.
 		
 		Course c = findById(10003L);
 		logger.info("Reviews for 10003 -> {}", c.getReviews());
@@ -128,12 +126,10 @@ public class CourseRepository {
 		
 		entityManager.persist(review1);
 		entityManager.persist(review2);
-
 	}
 	
 	public void addReviewsForCourse(Long courseId, List<Review> reviews)
 	{
-		
 		Course c = findById(courseId);
 		logger.info("Reviews -> {}", c.getReviews());
 		
@@ -147,5 +143,4 @@ public class CourseRepository {
 		// Persisting 1 object is enough in One to One, One to Many, Many to One.
 		// Mostly it will work. But persisting both the objects is better. Nothing wrong in persisting both.
 	}
-																																																					
 }

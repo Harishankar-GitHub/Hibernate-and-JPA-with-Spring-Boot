@@ -1,9 +1,14 @@
-//package com.jpa_and_hibernate;
+// package com.jpa_and_hibernate;
 // The above is the default line which has the package
 // Which ever class we are testing, that package name should be replaced here.
 package com.jpa_and_hibernate.repository;
 
-import java.util.List;
+import com.jpa_and_hibernate.entity.Course;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -13,14 +18,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.jpa_and_hibernate.entity.Course;
+import java.util.List;
 
 @SpringBootTest
 class CriteriaQueryTest {
@@ -28,7 +26,7 @@ class CriteriaQueryTest {
 	@Autowired
 	EntityManager em;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(CriteriaQueryTest.class);
 		
 	@Test
 	public void criteria_query_basic() {
@@ -48,13 +46,13 @@ class CriteriaQueryTest {
 		// 4. Add predicates etc to Criteria Query.
 		
 		// 5. Build the TypedQuery using EntityManager & Criteria Query.
-		TypedQuery<Course> query = em.createQuery(cq.select(courseRoot));
+		TypedQuery<Course> query = em.createQuery(cq.select(courseRoot))
+						.setMaxResults(2);	// To set the maximum number of rows to be fetched.
 		// Steps - End
 		
 		List<Course> resultList = query.getResultList();
 		
 		logger.info("\nCriteria Query -> {} \n", resultList);
-		
 	}
 	
 	@Test
@@ -79,12 +77,12 @@ class CriteriaQueryTest {
 		
 		// 5. Build the TypedQuery using EntityManager & Criteria Query.
 		TypedQuery<Course> query = em.createQuery(cq.select(courseRoot));
+//		TypedQuery<Course> query = em.createQuery(cq); // This line is also fine instead of the above line.
 		// Steps - End
 		
 		List<Course> resultList = query.getResultList();
 		
 		logger.info("\n Courses like '%100 Steps' -> {}\n", resultList);
-		
 	}
 	
 	@Test
@@ -113,7 +111,6 @@ class CriteriaQueryTest {
 		List<Course> resultList = query.getResultList();
 		
 		logger.info("\n Course without students -> {}\n", resultList);
-		
 	}
 	
 	@Test
@@ -142,7 +139,6 @@ class CriteriaQueryTest {
 		List<Course> resultList = query.getResultList();
 		
 		logger.info("\n Course Join Students -> {}\n", resultList);
-		
 	}
 	
 	@Test
@@ -171,7 +167,5 @@ class CriteriaQueryTest {
 		List<Course> resultList = query.getResultList();
 		
 		logger.info("\n Course Left Join Students -> {}\n", resultList);
-		
 	}
-	
 }

@@ -28,5 +28,4 @@ public class Address {
 	public String toString() {
 		return "Address [line1=" + line1 + ", line2=" + line2 + ", city=" + city + "]";
 	}
-	
 }

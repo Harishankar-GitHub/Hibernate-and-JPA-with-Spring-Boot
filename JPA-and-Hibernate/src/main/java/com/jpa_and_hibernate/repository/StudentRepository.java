@@ -1,37 +1,36 @@
 package com.jpa_and_hibernate.repository;
 
-import javax.persistence.EntityManager;
-
+import com.jpa_and_hibernate.entity.Course;
+import com.jpa_and_hibernate.entity.Passport;
+import com.jpa_and_hibernate.entity.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpa_and_hibernate.entity.Course;
-import com.jpa_and_hibernate.entity.Passport;
-import com.jpa_and_hibernate.entity.Student;
+import javax.persistence.EntityManager;
 
 @Repository
 @Transactional
 public class StudentRepository {
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(StudentRepository.class);
 	
 	@Autowired
 	EntityManager entityManager;									// Repository should be able to interact with Database.
-																					// That's why auto wiring EntityManager.
+																	// That's why auto wiring EntityManager.
 	
 	public Student findById(Long id)
 	{
-		return entityManager.find(Student.class, id);		// entityManager.find() is one of the default methods.
+		return entityManager.find(Student.class, id);				// entityManager.find() is one of the default methods.
 	}
 	
 	public Student save(Student student)
 	{
 		if (student.getId() == null)
 		{
-			entityManager.persist(student);						// persist() is used to insert. In other words, save.
+			entityManager.persist(student);							// persist() is used to insert. In other words, save.
 		}
 		else
 		{
@@ -52,7 +51,7 @@ public class StudentRepository {
 		entityManager.persist(passport);
 		
 		Student student = new Student("Mike");				// Creating a Student record.
-		student.setPassport(passport);								// Setting the created Passport to this Student.
+		student.setPassport(passport);							// Setting the created Passport to this Student.
 		entityManager.persist(student);
 		// After executing this method, the Passport Id will be 1 and the Student Id will be 2.
 		// This is because, the sequence is shared across all entities managed by an entity manager.
@@ -105,5 +104,4 @@ public class StudentRepository {
 		
 		// We need to persist both the objects here because Student and Course are in @ManyToMany relationship.
 	}
-	
 }
