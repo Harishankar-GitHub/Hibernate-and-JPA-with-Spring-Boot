@@ -5,9 +5,8 @@ package com.jpa_and_hibernate.repository;
 
 import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Review;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -19,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
+@Slf4j
 class CourseRepositoryTest {
 	
 	// Junit runs between Context Launch and Context Destroy.
@@ -28,8 +28,6 @@ class CourseRepositoryTest {
 	
 	@Autowired
 	EntityManager em;
-	
-	private static final Logger logger = LoggerFactory.getLogger(CourseRepositoryTest.class);
 		
 	@Test
 	public void findById_Basic() {
@@ -43,9 +41,9 @@ class CourseRepositoryTest {
 	public void findById_firstLevelCacheDemo()
 	{
 		Course course = courseRepository.findById(10001L);
-		logger.info("\n\n First Course Retrieved -> {} \n", course);
+		log.info("\n\n First Course Retrieved -> {} \n", course);
 		Course course1 = courseRepository.findById(10001L);
-		logger.info("\n\n First Course Retrieved Again -> {} \n", course);
+		log.info("\n\n First Course Retrieved Again -> {} \n", course);
 		assertEquals("JPA in 50 Steps", course.getName());
 		assertEquals("JPA in 50 Steps", course1.getName());
 		
@@ -102,7 +100,7 @@ class CourseRepositoryTest {
 	public void retrieveReviewsForCourse()
 	{
 		Course course1 = courseRepository.findById(10001L);
-		logger.info("\n Testing retrieveReviewsForCourse() -> {}", course1.getReviews());
+		log.info("\n Testing retrieveReviewsForCourse() -> {}", course1.getReviews());
 		
 	}
 	
@@ -111,7 +109,7 @@ class CourseRepositoryTest {
 	public void retrieveCourseForReview()
 	{
 		Review review1 = em.find(Review.class, 50001L);
-		logger.info("\n Testing retrieveCourseForReview() -> {}", review1.getCourse());
+		log.info("\n Testing retrieveCourseForReview() -> {}", review1.getCourse());
 	}
 	
 	@Test
@@ -119,9 +117,9 @@ class CourseRepositoryTest {
 	public void preRemove()
 	{
 		Course course1 = courseRepository.findById(10001L);
-		logger.info("\n\n Before Delete -> {}", course1);
+		log.info("\n\n Before Delete -> {}", course1);
 		courseRepository.deleteById(10001L);
 		Course course2 = courseRepository.findById(10001L);
-		logger.info("\n\n After Delete -> {}", course2);
+		log.info("\n\n After Delete -> {}", course2);
 	}
 }

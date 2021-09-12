@@ -5,9 +5,8 @@ package com.jpa_and_hibernate.repository;
 
 import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Student;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,14 +16,13 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @SpringBootTest
+@Slf4j
 class JPQL_Test {
 	
 	// Junit runs between Context Launch and Context Destroy
 	
 	@Autowired
 	EntityManager entityManager;
-	
-	private static final Logger logger = LoggerFactory.getLogger(JPQL_Test.class);
 		
 	@Test
 	public void jpql_Basic() {
@@ -33,7 +31,7 @@ class JPQL_Test {
 		// The above line should be assigned to a Query variable.
 		Query query = entityManager.createNamedQuery("query_get_all_courses");						// NamedQuery is used here.
 		List resultList = query.getResultList();
-		logger.info("Select c from Course c -> {}", resultList);
+		log.info("Select c from Course c -> {}", resultList);
 	}
 	
 	@Test
@@ -44,7 +42,7 @@ class JPQL_Test {
 		// That's why it is assigned to a TypedQuery variable.
 		TypedQuery<Course> query = entityManager.createNamedQuery("query_get_all_courses", Course.class);	// NamedQuery is used here.
 		List<Course> resultList = query.getResultList();
-		logger.info("Select c from Course c -> {}", resultList);
+		log.info("Select c from Course c -> {}", resultList);
 	}
 	
 	@Test
@@ -56,7 +54,7 @@ class JPQL_Test {
 		TypedQuery<Course> query = entityManager.createNamedQuery("query_get_100_Step_courses", Course.class);	// NamedQuery is used here.
 		
 		List<Course> resultList = query.getResultList();
-		logger.info("select c from Course c where name like '%100 Steps' -> {}", resultList);
+		log.info("select c from Course c where name like '%100 Steps' -> {}", resultList);
 	}
 	
 	@Test
@@ -64,7 +62,7 @@ class JPQL_Test {
 	
 		TypedQuery<Course> query = entityManager.createQuery("select c from Course c where c.students is empty", Course.class);
 		List<Course> resultList = query.getResultList();
-		logger.info("\n\n select c from Course where c.Students is empty -> {} \n\n", resultList);
+		log.info("\n\n select c from Course where c.Students is empty -> {} \n\n", resultList);
 	}
 	
 	@Test
@@ -72,7 +70,7 @@ class JPQL_Test {
 	
 		TypedQuery<Course> query = entityManager.createQuery("select c from Course c where size(c.students) > 1", Course.class);
 		List<Course> resultList = query.getResultList();
-		logger.info("\n\n select c from Course c where size(c.students) > 1 -> {} \n\n", resultList);
+		log.info("\n\n select c from Course c where size(c.students) > 1 -> {} \n\n", resultList);
 	}
 	
 	@Test
@@ -81,7 +79,7 @@ class JPQL_Test {
 		TypedQuery<Course> query = entityManager.createQuery("select c from Course c order by size(c.students)", Course.class);
 		// Default is ascending.
 		List<Course> resultList = query.getResultList();
-		logger.info("\n\n select c from Course c order by size(c.students) -> {} \n\n", resultList);
+		log.info("\n\n select c from Course c order by size(c.students) -> {} \n\n", resultList);
 	}
 	
 	@Test
@@ -94,7 +92,7 @@ class JPQL_Test {
 		// Can be retrieved from Student Class as well.
 		TypedQuery<Student> query = entityManager.createQuery("select s from Student s where s.passport.number like '%1234%'", Student.class);
 		List<Student> resultList = query.getResultList();
-		logger.info("\n\n Passports like '%1234%' -> {} \n\n", resultList);
+		log.info("\n\n Passports like '%1234%' -> {} \n\n", resultList);
 		
 		// We can use few more functions such as like, between, is null, upper, lower, trim, length etc.
 	}
@@ -107,12 +105,12 @@ class JPQL_Test {
 		// The list has list of array of objects.
 		// In 1 array, Course Object and Student Object will be present.
 		// Therefore, the list will have list of array of objects.
-		logger.info("JOIN -> {}", resultList.size());
+		log.info("JOIN -> {}", resultList.size());
 		
 		for (Object o : resultList)
 		{
 			// In 1 iteration, o will have 1 array which will have 1 Course Object & 1 corresponding Student Object.
-			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
+			log.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
 		}
 	}
 	
@@ -124,12 +122,12 @@ class JPQL_Test {
 		// The list has list of array of objects.
 		// In 1 array, Course Object and Student Object will be present.
 		// Therefore, the list will have list of array of objects.
-		logger.info("LEFT JOIN -> {}", resultList.size());
+		log.info("LEFT JOIN -> {}", resultList.size());
 		
 		for (Object o : resultList)
 		{
 			// In 1 iteration, o will have 1 array which will have 1 Course Object & 1 corresponding Student Object.
-			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
+			log.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
 		}
 	}
 	
@@ -141,12 +139,12 @@ class JPQL_Test {
 		// The list has list of array of objects.
 		// In 1 array, Course Object and Student Object will be present.
 		// Therefore, the list will have list of array of objects.
-		logger.info("CROSS JOIN -> {}", resultList.size());
+		log.info("CROSS JOIN -> {}", resultList.size());
 		
 		for (Object o : resultList)
 		{
 			// In 1 iteration, o will have 1 array which will have 1 Course Object & 1 corresponding Student Object.
-			logger.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
+			log.info("\n\n Course -> {} \n\n Student -> {} \n\n", ((Object[]) o)[0], ((Object[]) o)[1]);
 		}
 	}
 }

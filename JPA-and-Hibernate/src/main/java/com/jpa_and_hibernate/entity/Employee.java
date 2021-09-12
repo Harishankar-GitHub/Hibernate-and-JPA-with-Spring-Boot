@@ -1,5 +1,11 @@
 package com.jpa_and_hibernate.entity;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -43,42 +49,25 @@ import javax.persistence.InheritanceType;
 //// It is just defining some stuff in this class which is common between the sub-classes.
 //// If @MappedSuperclass is used, then @Entity cannot be used. i.e., Employee Class cannot be used as an Entity.
 //@MappedSuperclass Annotation code & Explanation - END -----------------------------------------------------------------------------------
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+// In Hibernate, if we use Parameterized Constructor, Java wouldn't provide a No Argument Constructor.
+// To overcome that, we are defining a No Argument Constructor.
+// And in Hibernate, No Argument Constructor is needed.
+@ToString
 public abstract class Employee {
 	// We have made Employee Class Abstract because, we don't want anybody to create object for Employee Class.
 	
 	@Id						// Used to define this variable as the primary key of the table
 	@GeneratedValue			// Used to Auto Generate values of this variable
-	private Long id;
+	@Getter private Long id;
 
 	@Column(name="name", nullable = false)			
+	@Getter @Setter
 	private String name;
-	
-	protected Employee()
-	{
-		// In Hibernate, if we use Parameterized Constructor, Java would't provide a No Argument Constructor.
-		// To overcome that, we are defining a No Argument Constructor.
-		// And in Hibernate, No Argument Constructor is needed.
-	}
-	
+
 	public Employee(String name)
 	{
 		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	@Override
-	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + "]";
 	}
 }

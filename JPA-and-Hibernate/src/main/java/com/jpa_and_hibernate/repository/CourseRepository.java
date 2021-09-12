@@ -3,8 +3,7 @@ package com.jpa_and_hibernate.repository;
 import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Review;
 import com.jpa_and_hibernate.entity.ReviewRating;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +13,8 @@ import java.util.List;
 
 @Repository
 @Transactional
+@Slf4j
 public class CourseRepository {
-	
-	private static final Logger logger = LoggerFactory.getLogger(CourseRepository.class);
 	
 	@Autowired
 	EntityManager entityManager;								// Repository should be able to interact with Database.
@@ -113,7 +111,7 @@ public class CourseRepository {
 		// 		3. Save it to database.
 		
 		Course c = findById(10003L);
-		logger.info("Reviews for 10003 -> {}", c.getReviews());
+		log.info("Reviews for 10003 -> {}", c.getReviews());
 		
 		Review review1 = new Review(ReviewRating.FIVE, "Great Hands-on Stuff");
 		Review review2 = new Review(ReviewRating.FIVE, "Hatsoff");
@@ -131,7 +129,7 @@ public class CourseRepository {
 	public void addReviewsForCourse(Long courseId, List<Review> reviews)
 	{
 		Course c = findById(courseId);
-		logger.info("Reviews -> {}", c.getReviews());
+		log.info("Reviews -> {}", c.getReviews());
 		
 		for (Review r : reviews)
 		{

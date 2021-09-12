@@ -7,7 +7,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-
 @RepositoryRestResource(path="courses")
 // By using above annotation, CourseSpringDataRepository is exposed to "http://localhost:8080/courses".
 public interface CourseSpringDataRepository extends JpaRepository<Course, Long>{

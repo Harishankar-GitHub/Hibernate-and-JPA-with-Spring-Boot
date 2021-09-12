@@ -4,9 +4,8 @@
 package com.jpa_and_hibernate.repository;
 
 import com.jpa_and_hibernate.entity.Course;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +15,12 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @SpringBootTest
+@Slf4j
 class PerformanceTuningTest {
 	
 	@Autowired
 	EntityManager em;
 	
-	private static final Logger logger = LoggerFactory.getLogger(PerformanceTuningTest.class);
-		
 	@Test
 	@Transactional
 	public void creatingNPlusOneProblem() {
@@ -32,7 +30,7 @@ class PerformanceTuningTest {
 
 		for (Course c : courses)
 		{
-			logger.info("\n Course -> {} Students -> {} \n", c, c.getStudents());
+			log.info("\n Course -> {} Students -> {} \n", c, c.getStudents());
 		}
 		
 		// If we execute this method, 4 queries will be fired.
@@ -59,7 +57,7 @@ class PerformanceTuningTest {
 		
 		for (Course c : courses)
 		{
-			logger.info("\n EntityGraph -> Course -> {} Students -> {} \n", c, c.getStudents());
+			log.info("\n EntityGraph -> Course -> {} Students -> {} \n", c, c.getStudents());
 		}
 		
 		// Course & Student are in @ManyToMany relationship.
@@ -81,7 +79,7 @@ class PerformanceTuningTest {
 
 		for (Course c : courses)
 		{
-			logger.info("\n\n JoinFetch -> Course -> {} Students -> {} \n\n", c, c.getStudents());
+			log.info("\n\n JoinFetch -> Course -> {} Students -> {} \n\n", c, c.getStudents());
 		}
 		
 		// JOIN FETCH is also one of the solutions for N+1 Problem.

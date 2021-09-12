@@ -4,9 +4,8 @@
 package com.jpa_and_hibernate.repository;
 
 import com.jpa_and_hibernate.entity.Course;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -20,12 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
+@Slf4j
 class CourseSpringDataRepositoryTest {
 	
 	@Autowired
 	CourseSpringDataRepository r;
-	
-	private static final Logger logger = LoggerFactory.getLogger(CourseSpringDataRepositoryTest.class);
 	
 	@Test
 	public void findById_coursePresent()
@@ -56,18 +54,18 @@ class CourseSpringDataRepositoryTest {
 //		c.setName("Microservices in 100 Steps - updated");
 //		r.save(c);
 
-		logger.info("\n\n Courses -> {}", r.findAll());
-		logger.info("\n\n Count -> {}", r.count());
+		log.info("\n\n Courses -> {}", r.findAll());
+		log.info("\n\n Count -> {}", r.count());
 	}
 	
 	@Test
 	public void sort()
 	{
 		Sort sd = Sort.by(Sort.Direction.DESC, "name");
-		logger.info("\n\n  Descending Sorted Courses -> {} \n", r.findAll(sd));
+		log.info("\n\n  Descending Sorted Courses -> {} \n", r.findAll(sd));
 		
 		Sort sa = Sort.by(Sort.Direction.ASC, "name");
-		logger.info("\n\n  Ascending Sorted Courses -> {} \n", r.findAll(sa));
+		log.info("\n\n  Ascending Sorted Courses -> {} \n", r.findAll(sa));
 	}
 	
 	@Test
@@ -79,13 +77,13 @@ class CourseSpringDataRepositoryTest {
 		// 3 is the number of records per page.
 		Page<Course> firstPage = r.findAll(p);
 		// Finding all the records and assigning it to a Page.
-		logger.info("\n\n First Page -> {} \n\n", firstPage.getContent());
+		log.info("\n\n First Page -> {} \n\n", firstPage.getContent());
 		
 		Pageable pageable = firstPage.nextPageable();
 		// Using firstPage.nextPageable() to get the next page.
 		Page<Course> secondPage = r.findAll(pageable);
 		// // Finding all the records and assigning it to a Page.
-		logger.info("\n\n Second Page -> {} \n\n", secondPage.getContent());
+		log.info("\n\n Second Page -> {} \n\n", secondPage.getContent());
 		
 		// We have various methods in Page.
 		// We can check those by typing "firstPage."
@@ -94,6 +92,6 @@ class CourseSpringDataRepositoryTest {
 	@Test
 	public void findUsingName()	// Custom Queries using Spring Data JPA Repository
 	{
-		logger.info("\n\n FindByName -> {} \n\n", r.findByName("JPA in 50 Steps"));
+		log.info("\n\n FindByName -> {} \n\n", r.findByName("JPA in 50 Steps"));
 	}
 }

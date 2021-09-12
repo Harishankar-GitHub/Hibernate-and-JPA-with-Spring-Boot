@@ -4,9 +4,8 @@
 package com.jpa_and_hibernate.repository;
 
 import com.jpa_and_hibernate.entity.Course;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,13 +20,12 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @SpringBootTest
+@Slf4j
 class CriteriaQueryTest {
 	
 	@Autowired
 	EntityManager em;
 	
-	private static final Logger logger = LoggerFactory.getLogger(CriteriaQueryTest.class);
-		
 	@Test
 	public void criteria_query_basic() {
 		// Writing the below JPQL Query using Criteria Query.
@@ -52,7 +50,7 @@ class CriteriaQueryTest {
 		
 		List<Course> resultList = query.getResultList();
 		
-		logger.info("\nCriteria Query -> {} \n", resultList);
+		log.info("\nCriteria Query -> {} \n", resultList);
 	}
 	
 	@Test
@@ -82,7 +80,7 @@ class CriteriaQueryTest {
 		
 		List<Course> resultList = query.getResultList();
 		
-		logger.info("\n Courses like '%100 Steps' -> {}\n", resultList);
+		log.info("\n Courses like '%100 Steps' -> {}\n", resultList);
 	}
 	
 	@Test
@@ -110,7 +108,7 @@ class CriteriaQueryTest {
 		
 		List<Course> resultList = query.getResultList();
 		
-		logger.info("\n Course without students -> {}\n", resultList);
+		log.info("\n Course without students -> {}\n", resultList);
 	}
 	
 	@Test
@@ -138,7 +136,7 @@ class CriteriaQueryTest {
 		
 		List<Course> resultList = query.getResultList();
 		
-		logger.info("\n Course Join Students -> {}\n", resultList);
+		log.info("\n Course Join Students -> {}\n", resultList);
 	}
 	
 	@Test
@@ -166,6 +164,6 @@ class CriteriaQueryTest {
 		
 		List<Course> resultList = query.getResultList();
 		
-		logger.info("\n Course Left Join Students -> {}\n", resultList);
+		log.info("\n Course Left Join Students -> {}\n", resultList);
 	}
 }

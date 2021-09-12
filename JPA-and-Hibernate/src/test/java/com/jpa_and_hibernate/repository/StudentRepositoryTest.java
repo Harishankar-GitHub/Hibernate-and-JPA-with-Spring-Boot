@@ -7,9 +7,8 @@ import com.jpa_and_hibernate.entity.Address;
 import com.jpa_and_hibernate.entity.Course;
 import com.jpa_and_hibernate.entity.Passport;
 import com.jpa_and_hibernate.entity.Student;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 @SpringBootTest
+@Slf4j
 class StudentRepositoryTest {
 	
 	// Junit runs between Context Launch and Context Destroy
@@ -25,8 +25,6 @@ class StudentRepositoryTest {
 	StudentRepository studentRepository;
 	@Autowired
 	EntityManager entityManager;
-	
-	private static final Logger logger = LoggerFactory.getLogger(StudentRepositoryTest.class);
 	
 	@Test
 	public void someTest() {
@@ -41,8 +39,8 @@ class StudentRepositoryTest {
 	// And now the passport details will be fetched as it's requested in 3rd line of the method.
 	public void retrieveStudentAndPassportDetails() {
 		Student student = entityManager.find(Student.class, 20001L);
-		logger.info("Student details -> {}", student);
-		logger.info("Passport details -> {}", student.getPassport());
+		log.info("Student details -> {}", student);
+		log.info("Passport details -> {}", student.getPassport());
 	}
 	
 	@Test
@@ -51,8 +49,8 @@ class StudentRepositoryTest {
 		Student student = entityManager.find(Student.class, 20001L);
 		student.setAddress(new Address("No 101", "Some Street", "Bangalore"));
 		entityManager.flush();
-		logger.info("Student details -> {}", student);
-		logger.info("Passport details -> {}", student.getPassport());
+		log.info("Student details -> {}", student);
+		log.info("Passport details -> {}", student.getPassport());
 	}
 	
 	@Test
@@ -60,8 +58,8 @@ class StudentRepositoryTest {
 	public void retrievePassportAndAssociatedStudent()
 	{
 		Passport passport = entityManager.find(Passport.class, 40001L);
-		logger.info("Passport Details -> {}", passport);
-		logger.info("Student Details -> {}", passport.getStudent());
+		log.info("Passport Details -> {}", passport);
+		log.info("Student Details -> {}", passport.getStudent());
 	}
 	
 	@Test
@@ -69,8 +67,8 @@ class StudentRepositoryTest {
 	public void retrieveStudentAndCourses()
 	{
 		Student s = entityManager.find(Student.class, 20001L);
-		logger.info("\n Testing retrieveStudentAndCourses() -> Student details -> {}", s);
-		logger.info("\n Testing retrieveStudentAndCourses() -> {}", s.getCourses());
+		log.info("\n Testing retrieveStudentAndCourses() -> Student details -> {}", s);
+		log.info("\n Testing retrieveStudentAndCourses() -> {}", s.getCourses());
 	}
 	
 	@Test
@@ -78,7 +76,7 @@ class StudentRepositoryTest {
 	public void retrieveCourseAndStudents()
 	{
 		Course c = entityManager.find(Course.class, 10001L);
-		logger.info("\n Testing retrieveCourseAndStudents() -> Course details -> {}", c);
-		logger.info("\n Testing retrieveCourseAndStudents() -> {}", c.getStudents());
+		log.info("\n Testing retrieveCourseAndStudents() -> Course details -> {}", c);
+		log.info("\n Testing retrieveCourseAndStudents() -> {}", c.getStudents());
 	}
 }

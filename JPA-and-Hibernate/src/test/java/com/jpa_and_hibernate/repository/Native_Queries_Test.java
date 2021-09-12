@@ -4,9 +4,8 @@
 package com.jpa_and_hibernate.repository;
 
 import com.jpa_and_hibernate.entity.Course;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +15,14 @@ import javax.persistence.Query;
 import java.util.List;
 
 @SpringBootTest
+@Slf4j
 class Native_Queries_Test {
 	
 	// Junit runs between Context Launch and Context Destroy
 	
 	@Autowired
 	EntityManager entityManager;
-	
-	private static final Logger logger = LoggerFactory.getLogger(Native_Queries_Test.class);
-	
+
 	// Native Queries
 	//There might be some situation where we might need Native Queries.
 	//		1. For setting some tuning parameters.
@@ -41,7 +39,7 @@ class Native_Queries_Test {
 		// If we don't put Course.class, it will print the result as objects.
 		// If we put Course.class, it will print proper values.
 		List resultList = query.getResultList();
-		logger.info("select * from course -> {}", resultList);
+		log.info("select * from course -> {}", resultList);
 	}
 	
 	@Test
@@ -49,7 +47,7 @@ class Native_Queries_Test {
 		Query query = entityManager.createNativeQuery("select * from course where id = ?", Course.class);
 		query.setParameter(1, 10001L);
 		List resultList = query.getResultList();
-		logger.info("select * from course where id = ? -> {}", resultList);
+		log.info("select * from course where id = ? -> {}", resultList);
 	}
 	
 	@Test
@@ -57,7 +55,7 @@ class Native_Queries_Test {
 		Query query = entityManager.createNativeQuery("select * from course where id = :id", Course.class);
 		query.setParameter("id", 10001L);
 		List resultList = query.getResultList();
-		logger.info("select * from course where id = ? -> {}", resultList);
+		log.info("select * from course where id = ? -> {}", resultList);
 	}
 	
 	@Test
@@ -66,6 +64,6 @@ class Native_Queries_Test {
 	{
 		Query query = entityManager.createNativeQuery("update course set last_updated_date = sysdate()", Course.class);
 		int noOfRowsUpdated = query.executeUpdate();		// For updating or inserting or deleting, we use executeUpdate().
-		logger.info("Number of rows updated -> {}", noOfRowsUpdated);
+		log.info("Number of rows updated -> {}", noOfRowsUpdated);
 	}
 }
